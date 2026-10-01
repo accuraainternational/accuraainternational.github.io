@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accuraa International | Travel & Holidays</title>
+  <meta name="description" content="Accuraa International - Travel, holidays, flights, hotels and international travel assistance.">
+  <style>
+    :root{--navy:#062b52;--blue:#0b5c9e;--gold:#c79a3b;--light:#f6f9fc;--text:#17324d}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);line-height:1.6;background:#fff}
+    header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.97);border-bottom:1px solid #e6edf4}
+    .nav{max-width:1150px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 20px}
+    .brand img{width:180px;height:auto;display:block}
+    nav a{color:var(--navy);text-decoration:none;margin-left:22px;font-weight:700;font-size:14px}
+    nav a:hover{color:var(--gold)}
+    .hero{background:linear-gradient(135deg,#062b52,#0b5c9e);color:white;padding:90px 20px}
+    .hero-inner{max-width:1150px;margin:auto;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+    .hero h1{font-size:clamp(40px,6vw,68px);line-height:1.05;margin-bottom:20px}
+    .hero h1 span{color:#e6bf68}
+    .hero p{font-size:20px;max-width:650px;opacity:.95;margin-bottom:30px}
+    .btn{display:inline-block;padding:14px 24px;border-radius:30px;text-decoration:none;font-weight:700;margin-right:10px}
+    .primary{background:var(--gold);color:#fff}.secondary{border:1px solid #fff;color:#fff}
+    .hero-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:24px;padding:30px;backdrop-filter:blur(8px)}
+    .hero-card h3{margin-bottom:15px;color:#f1d38e}.hero-card li{margin:10px 0 0 20px}
+    section{padding:75px 20px}.container{max-width:1150px;margin:auto}
+    .section-title{text-align:center;margin-bottom:40px}.section-title h2{font-size:38px;color:var(--navy)}.section-title p{color:#6d7e8f}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .card{padding:28px;border:1px solid #e3ebf3;border-radius:18px;background:#fff;box-shadow:0 8px 25px rgba(10,50,90,.06)}
+    .icon{font-size:34px;margin-bottom:10px}.card h3{color:var(--navy);margin-bottom:8px}
+    .about{background:var(--light)}.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center}
+    .about-box{background:#fff;padding:30px;border-radius:22px;border-left:5px solid var(--gold)}
+    .contact{background:var(--navy);color:#fff}.contact h2{color:#fff}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+    .contact-card{background:rgba(255,255,255,.08);padding:30px;border-radius:20px}
+    .contact-card a{color:#f1d38e;text-decoration:none}
+    footer{background:#031c35;color:#b9c9d8;text-align:center;padding:25px 20px;font-size:14px}
+    @media(max-width:800px){nav{display:none}.hero-inner,.about-grid,.contact-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.hero{padding:65px 20px}.brand img{width:150px}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <a class="brand" href="#home"><img src="logo.jpg" alt="Accuraa International"></a>
+    <nav>
+      <a href="#home">Home</a><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div>
+      <h1>Travel the world with <span>Accuraa International</span></h1>
+      <p>Your travel partner for holidays, flights, hotels and international journeys — planned with care from departure to return.</p>
+      <a class="btn primary" href="#contact">Plan My Trip</a>
+      <a class="btn secondary" href="#services">Explore Services</a>
+    </div>
+    <div class="hero-card">
+      <h3>Travel services</h3>
+      <ul>
+        <li>International & domestic holidays</li>
+        <li>Flight booking assistance</li>
+        <li>Hotel & resort reservations</li>
+        <li>Custom travel itineraries</li>
+        <li>Family & group tours</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <div class="section-title"><h2>Our Services</h2><p>Everything you need for a smooth journey.</p></div>
+    <div class="grid">
+      <div class="card"><div class="icon">✈️</div><h3>Flights</h3><p>Assistance with domestic and international flight bookings and travel planning.</p></div>
+      <div class="card"><div class="icon">🌍</div><h3>Holiday Packages</h3><p>Customized leisure trips for couples, families, groups and international travellers.</p></div>
+      <div class="card"><div class="icon">🏨</div><h3>Hotels</h3><p>Hotel and resort arrangements selected around your destination and budget.</p></div>
+      <div class="card"><div class="icon">🧭</div><h3>Custom Itineraries</h3><p>Flexible day-by-day travel plans designed around your interests and schedule.</p></div>
+      <div class="card"><div class="icon">👨‍👩‍👧‍👦</div><h3>Family & Group Tours</h3><p>Comfortable travel planning for families, friends, corporate groups and communities.</p></div>
+      <div class="card"><div class="icon">🛂</div><h3>Travel Assistance</h3><p>Pre-travel guidance and coordination for your international journey.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div>
+      <div class="section-title" style="text-align:left;margin-bottom:20px"><h2>About Accuraa International</h2></div>
+      <p>We help travellers turn destinations into well-planned journeys. From selecting a destination to arranging flights, stays and a practical itinerary, our goal is to make travel simpler.</p>
+      <br><p><strong>Tell us where you want to go — we'll help plan the journey.</strong></p>
+    </div>
+    <div class="about-box">
+      <h3>Why travel with us?</h3>
+      <p>✓ Personalized planning</p><p>✓ Transparent communication</p><p>✓ Domestic & international travel</p><p>✓ Support throughout your planning process</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-title"><h2>Start Planning Your Trip</h2><p style="color:#c8d6e4">Replace the contact details below with your actual business details.</p></div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>Contact us</h3>
+        <p>📞 Phone: <a href="tel:+910000000000">+91 XXXXX XXXXX</a></p>
+        <p>💬 WhatsApp: <a href="https://wa.me/910000000000">Chat on WhatsApp</a></p>
+        <p>✉️ Email: <a href="mailto:info@yourdomain.com">info@yourdomain.com</a></p>
+      </div>
+      <div class="contact-card">
+        <h3>Tell us your destination</h3>
+        <p>Destination: __________________</p>
+        <p>Travel dates: __________________</p>
+        <p>Travellers: ____________________</p>
+        <br><a class="btn primary" href="mailto:info@yourdomain.com?subject=Travel%20Enquiry">Send Enquiry</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 Accuraa International. All rights reserved.</footer>
+</body>
+</html>
