@@ -2,7 +2,7 @@ ACCURAA INTERNATIONAL - WEBSITE
 
 Files:
 - index.html : complete responsive website
-- logo.png   : cropped logo from your supplied image
+- accuraa_logo_tight.png   : cropped logo from your supplied image
 
 FREE HOSTING OPTION:
 1. Create a free GitHub account.
