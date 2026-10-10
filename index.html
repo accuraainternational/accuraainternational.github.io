@@ -3,8 +3,9 @@
 .tp-section{background:#f7f9fc}
 .tp-wrap{max-width:1000px;margin:auto;width:min(1000px,92%)}
 .tp-tabs{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:25px 0}
-.tp-tab{border:0;border-radius:28px;padding:13px 20px;font-weight:800;cursor:pointer;background:#e7edf5;color:var(--n)}
-.tp-tab.active{background:var(--n);color:#fff}
+.tp-tab{border:1px solid #e4e9f0;border-radius:28px;padding:13px 20px;font-weight:800;cursor:pointer;background:#f3f6fa;color:#53657c;transition:background .2s,color .2s,border-color .2s}
+.tp-tab.active{background:var(--n);border-color:var(--n);color:#fff}
+.tp-tab:not(.active):hover{background:#e9eef5;color:var(--n)}
 .tp-panel{background:#fff;border:1px solid #e4e9f0;border-radius:18px;padding:26px;box-shadow:var(--s);margin:0 auto 24px}
 .tp-panel h3{color:var(--n);font-size:24px;margin-bottom:8px}
 .tp-help{color:var(--m);font-size:14px;margin-bottom:20px}
@@ -72,8 +73,8 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
 
 <section class="tp-section" id="travel-desk"><div class="tp-wrap">
  <div class="section-head"><div class="eyebrow">Plan with Accuraa</div><h2>Travel Planning Desk</h2><p>Share your holiday requirements. The premium quotation generator is available separately to authorized Accuraa International admin users.</p></div>
- <div class="tp-tabs tp-no-print"><button class="tp-tab active" id="tp-tab-req" type="button" onclick="tpShow('req')">Travel Requirements Form</button><button class="tp-tab" id="tp-tab-admin" type="button" onclick="document.getElementById('tp-admin-login').scrollIntoView({behavior:'smooth',block:'center'})">Admin Quotation Desk 🔒</button></div>
-  <div class="admin-login tp-no-print" id="tp-admin-login">
+ <div class="tp-tabs tp-no-print"><button class="tp-tab active" id="tp-tab-req" type="button" onclick="tpShow('req')">Travel Requirements Form</button><button class="tp-tab" id="tp-tab-admin" type="button" onclick="tpShow('admin');document.getElementById('tp-admin-login').scrollIntoView({behavior:'smooth',block:'center'})">Admin Quotation Desk 🔒</button></div>
+  <div class="admin-login tp-no-print tp-hidden" id="tp-admin-login">
    <span class="admin-only-badge">PRIVATE • ADMIN ACCESS</span>
    <h3>Premium Quotation Desk</h3>
    <p>Sign in with the authorized Accuraa International admin account to open the quotation generator. Clients can continue using the Travel Requirements Form above.</p>
@@ -129,7 +130,7 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
 <section class="contact" id="contact"><div class="container"><div class="section-head"><div class="eyebrow">Let's plan your journey</div><h2>Tell us where you want to go</h2><p>For a quotation, send your destination, travel dates, number of travellers and preferred services.</p></div><div class="contact-grid"><div class="contact-card"><h3 style="color:var(--n);font-size:24px">Contact Accuraa International</h3><div class="contact-item"><div>📞</div><div><b>Phone</b><span>+91 96646 00928</span></div></div><div class="contact-item"><div>💬</div><div><b>WhatsApp</b><span>Available for enquiries & quotations</span></div></div><div class="contact-item"><div>✉️</div><div><b>Email</b><span>accuraa.international@gmail.com</span></div></div><div class="contact-item"><div>📍</div><div><b>Location</b><span>Gujarat, Kadi – 382715, India</span></div></div><div class="contact-actions"><a class="btn btn-gold" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote.">WhatsApp Us</a><a class="btn" style="background:var(--n);color:#fff" href="mailto:accuraa.international@gmail.com">Email Us</a></div></div><div class="contact-card"><h3 style="color:var(--n);font-size:24px">Request a Quote</h3><p style="color:var(--m);margin:12px 0 20px">Send us your requirements on WhatsApp and we'll help you with suitable options.</p><ul style="color:var(--m);padding-left:20px;display:grid;gap:8px"><li>Destination / route</li><li>Travel dates</li><li>Number of travellers</li><li>Flight / train / hotel requirement</li><li>Any special preferences</li></ul><a class="btn btn-gold" style="margin-top:25px" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote.%0A%0ADestination%3A%0ATravel%20dates%3A%0ANo.%20of%20travellers%3A%0AService%20required%3A">Start Enquiry</a></div></div></div></section></main>
 <a class="wa" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote." aria-label="WhatsApp Accuraa International">◉</a><footer><div class="container footer-row"><div>© 2026 Accuraa International. All rights reserved.</div><div>Your Travel Partner • Gujarat, India</div></div></footer><script>document.querySelectorAll('.navlinks a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.navlinks').classList.remove('open')))
 function tpVal(id){return (document.getElementById(id).value||'').trim()}
-function tpShow(which){document.getElementById('tp-req').classList.toggle('tp-hidden',which!=='req');document.getElementById('tp-quote').classList.toggle('tp-hidden',which!=='quote');document.getElementById('tp-tab-req').classList.toggle('active',which==='req');var quoteTab=document.getElementById('tp-tab-quote');if(quoteTab)quoteTab.classList.toggle('active',which==='quote');if(which==='quote')tpUpdateTotal()}
+function tpShow(which){var req=which==='req';var admin=which==='admin';document.getElementById('tp-req').classList.toggle('tp-hidden',!req);document.getElementById('tp-admin-login').classList.toggle('tp-hidden',req||which==='quote');document.getElementById('tp-quote').classList.toggle('tp-hidden',which!=='quote');document.getElementById('tp-tab-req').classList.toggle('active',req);document.getElementById('tp-tab-admin').classList.toggle('active',admin||which==='quote');if(which==='quote')tpUpdateTotal()}
 function tpPrint(which){var f=document.getElementById(which==='req'?'tp-req-form':'tp-quote-form');if(!f.reportValidity())return;tpShow(which);document.body.classList.add('tp-printing');document.getElementById(which==='req'?'tp-req':'tp-quote').classList.add('tp-print-target');window.print()}
 window.addEventListener('afterprint',function(){document.body.classList.remove('tp-printing');document.querySelectorAll('.tp-print-target').forEach(function(e){e.classList.remove('tp-print-target')})});
 function tpSendReq(){var f=document.getElementById('tp-req-form');if(!f.reportValidity())return;var m=['Hello Accuraa International, I would like a travel package quotation.','Destination: '+tpVal('tp-destination'),'Number of days: '+tpVal('tp-days'),'Client name: '+tpVal('tp-name'),'Contact number: '+tpVal('tp-phone'),'Adults (above 12): '+(tpVal('tp-adults')||'0'),'Children (1–6 years): '+(tpVal('tp-kids1')||'0'),'Children (6–12 years): '+(tpVal('tp-kids2')||'0'),'Check-in / start date: '+(tpVal('tp-checkin')||'Not specified'),'Check-out / end date: '+(tpVal('tp-checkout')||'Not specified'),'Number of rooms: '+(tpVal('tp-rooms')||'Not specified'),'Travelling as: '+tpVal('tp-type'),'Budget: '+(tpVal('tp-budget')||'Not specified'),'Special requirements: '+(tpVal('tp-notes')||'None')].join('\\n');window.open('https://wa.me/919664600928?text='+encodeURIComponent(m),'_blank','noopener')}
@@ -216,8 +217,8 @@ openQuoteButton.addEventListener('click', () => {
   if (!auth.currentUser || (auth.currentUser.email || '').toLowerCase() !== ADMIN_EMAIL) {
     lockAdminDesk(); adminStatus('Please sign in with the authorized admin account.', 'error'); return;
   }
-  document.getElementById('tp-quote').classList.remove('tp-hidden');
   if (typeof window.tpShow === 'function') window.tpShow('quote');
+  document.getElementById('tp-quote').classList.remove('tp-hidden');
   document.getElementById('tp-quote').scrollIntoView({behavior:'smooth', block:'start'});
 });
 onAuthStateChanged(auth, (user) => {
