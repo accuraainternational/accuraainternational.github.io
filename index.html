@@ -36,30 +36,34 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
 .admin-status.error{color:#b42318!important}.admin-status.success{color:#167044!important}
 .admin-only-badge{display:inline-block;background:#f9efcc;color:#674b00;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:800;margin-bottom:8px}
 @media(max-width:700px){.admin-login-grid{grid-template-columns:1fr}}
-@page{size:A4;margin:12mm 13mm 13mm}
+@page{size:A4 portrait;margin:7mm}
 @media print{
- body.tp-printing{font-family:Arial,Helvetica,sans-serif!important;color:#172238!important;font-size:9.5pt!important;line-height:1.35!important;background:#fff!important}
- body.tp-printing *{box-shadow:none!important;text-shadow:none!important}
- body.tp-printing *{visibility:hidden!important}
- body.tp-printing .tp-print-target,body.tp-printing .tp-print-target *{visibility:visible!important}
- body.tp-printing .tp-print-target{position:absolute!important;left:0!important;top:0!important;width:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#fff!important}
- body.tp-printing .tp-no-print{display:none!important}
- body.tp-printing .tp-letterhead{display:grid!important;grid-template-columns:72px 1fr;column-gap:14px;align-items:center;text-align:left!important;border-bottom:3px solid #102b5c;padding:0 0 10px;margin:0 0 12px;color:#172238;position:relative}
- body.tp-printing .tp-letterhead img{grid-column:1;grid-row:1/5;width:68px;height:68px;object-fit:contain;justify-self:center}
- body.tp-printing .tp-letterhead h2{grid-column:2;font-size:19pt!important;line-height:1.1;color:#102b5c!important;margin:0 0 2px!important;font-weight:800;letter-spacing:.2px}
- body.tp-printing .tp-letterhead p{grid-column:2;margin:1px 0!important;font-size:8.5pt!important;line-height:1.25}
- body.tp-printing .tp-letterhead hr{display:none}
- body.tp-printing .tp-letterhead h3{grid-column:2;font-size:11pt!important;letter-spacing:1.1px;color:#9a741d!important;margin:5px 0 0!important;border:0!important;font-weight:800}
- body.tp-printing .tp-panel h3.tp-no-print{display:none!important}
- body.tp-printing .tp-grid{grid-template-columns:1fr 1fr!important;gap:7px 14px!important}
- body.tp-printing .tp-subhead{grid-column:1/-1!important;background:#edf2f8!important;border-left:4px solid #102b5c;padding:5px 8px!important;margin:3px 0 1px!important;color:#102b5c!important;font-size:9pt!important;letter-spacing:.3px;break-after:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}
- body.tp-printing .tp-field{gap:2px!important;break-inside:avoid!important;page-break-inside:avoid!important;min-width:0}
- body.tp-printing .tp-field label{font-size:8pt!important;color:#475569!important;font-weight:700!important}
- body.tp-printing .tp-field input,body.tp-printing .tp-field select,body.tp-printing .tp-field textarea{width:100%!important;border:0!important;border-bottom:1px solid #b9c4d3!important;border-radius:0!important;padding:2px 0 3px!important;min-height:18px!important;background:transparent!important;color:#111!important;font-size:9pt!important;appearance:none!important}
- body.tp-printing .tp-field textarea{min-height:26px!important;resize:none!important}
- body.tp-printing .tp-full{grid-column:1/-1!important}
- body.tp-printing .tp-actions,body.tp-printing .tp-note{display:none!important}
- body.tp-printing input::placeholder,body.tp-printing textarea::placeholder{color:transparent!important}
+ body.tp-printing{font-family:Arial,Helvetica,sans-serif!important;color:#102b5c!important;font-size:9pt!important;line-height:1.25!important;background:#fff!important}
+ body.tp-printing> *:not(#tp-print-root){display:none!important}
+ body.tp-printing #tp-print-root{display:block!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important;background:#fff!important;overflow:visible!important}
+ #tp-print-root *{box-shadow:none!important;text-shadow:none!important;box-sizing:border-box!important}
+ #tp-print-root .tp-panel{display:block!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#fff!important;overflow:visible!important}
+ #tp-print-root .tp-letterhead{display:grid!important;grid-template-columns:225px 1fr;grid-template-rows:auto auto auto auto;column-gap:18px;align-items:center;text-align:left!important;border-bottom:3px solid #d6a62a;padding:0 0 9px;margin:0 0 10px;color:#102b5c;position:relative}
+ #tp-print-root .tp-letterhead img{grid-column:1;grid-row:1/4;width:220px;height:112px;object-fit:contain;justify-self:center}
+ #tp-print-root .tp-letterhead h2{grid-column:2;font-family:Georgia,"Palatino Linotype","Book Antiqua",serif!important;font-size:43pt!important;line-height:.94!important;color:#071a35!important;margin:0!important;font-weight:700!important;letter-spacing:-.65px!important}
+ #tp-print-root .tp-letterhead .tp-brand-international{grid-column:2;font-family:Arial,Helvetica,sans-serif!important;font-size:13pt!important;line-height:1!important;letter-spacing:2.4px!important;font-weight:700!important;text-transform:uppercase;color:#0b2d57!important;margin:-5px 0 2px!important}
+ #tp-print-root .tp-letterhead p{grid-column:2;margin:1px 0!important;font-size:8.5pt!important;line-height:1.2}
+ #tp-print-root .tp-letterhead .tp-doc-title{grid-column:1/-1;background:#071a35!important;color:#ffffff!important;text-align:center;font-size:15pt!important;letter-spacing:1px;padding:8px!important;margin:9px 0 8px!important;font-weight:700!important;border-radius:4px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ #tp-print-root .tp-letterhead hr{display:none}
+ #tp-print-root .tp-print-footer{display:flex!important;justify-content:space-between;gap:10px;background:#eef3fa!important;color:#102b5c!important;border-top:3px solid #d6a62a;padding:8px 10px;margin:10px 0 0;font-size:7.5pt!important;line-height:1.25;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ #tp-print-root .tp-print-footer span{flex:1;min-width:0;overflow-wrap:anywhere;color:#102b5c!important;font-weight:600!important}
+ #tp-print-root .tp-print-footer span::first-line{color:#9a7010!important;font-weight:800!important}
+ #tp-print-root .tp-print-footer *{color:#102b5c!important;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ #tp-print-root .tp-panel h3.tp-no-print,#tp-print-root .tp-help.tp-no-print{display:none!important}
+ #tp-print-root .tp-grid{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:4px 10px!important}
+ #tp-print-root .tp-subhead{grid-column:1/-1!important;background:#102b5c!important;color:#fff!important;border-left:4px solid #d6a62a;padding:5px 8px!important;margin:3px 0 1px!important;font-size:8.5pt!important;break-after:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ #tp-print-root .tp-field{gap:2px!important;break-inside:avoid!important;page-break-inside:avoid!important;min-width:0}
+ #tp-print-root .tp-field label{font-size:7.5pt!important;color:#102b5c!important;font-weight:600!important}
+ #tp-print-root .tp-field input,#tp-print-root .tp-field select,#tp-print-root .tp-field textarea{width:100%!important;border:1px solid #c7dced!important;border-radius:4px!important;padding:4px 5px!important;min-height:20px!important;background:#eff6fc!important;color:#172238!important;font-size:8.5pt!important;appearance:none!important}
+ #tp-print-root .tp-field textarea{min-height:24px!important;height:auto!important;resize:none!important;overflow:visible!important}
+ #tp-print-root .tp-full{grid-column:1/-1!important}
+ #tp-print-root .tp-actions,#tp-print-root .tp-note{display:none!important}
+ #tp-print-root input::placeholder,#tp-print-root textarea::placeholder{color:transparent!important}
 }
 </style><title>Accuraa International | Flight, Train & Hotel Booking</title>
 <meta name="description" content="Accuraa International – Your Travel Partner in Kadi, Gujarat. Flight booking, train booking, hotel reservations, tour packages and customized travel assistance.">
@@ -81,7 +85,7 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
    <form id="tp-admin-login-form"><div class="admin-login-grid"><div><label for="tp-admin-email">Admin email</label><input id="tp-admin-email" type="email" autocomplete="username" required placeholder="admin email"></div><div><label for="tp-admin-password">Password</label><input id="tp-admin-password" type="password" autocomplete="current-password" required placeholder="Your password"></div></div><div class="tp-actions"><button class="tp-btn tp-btn-main" id="tp-admin-signin" type="submit">Sign in</button><button class="tp-btn tp-btn-line tp-hidden" id="tp-admin-signout" type="button">Sign out</button><button class="tp-btn tp-btn-gold tp-hidden" id="tp-admin-open-quote" type="button">Open Quotation Generator</button></div><p class="admin-status" id="tp-admin-status" role="status" aria-live="polite">Sign in is restricted to the authorized admin email.</p></form>
   </div>
  <div class="tp-panel" id="tp-req">
-  <div class="tp-letterhead"><img src="logo.png" alt="Accuraa International logo"><h2>Accuraa International</h2><p><b>Your Travel Partner</b></p><p>+91 96646 00928 | accuraa.international@gmail.com</p><p>Gujarat, Kadi – 382715, India</p><hr><h3>TRAVEL REQUIREMENTS</h3></div>
+  <div class="tp-letterhead"><img src="logo.png" alt="Accuraa International logo"><h2>Accuraa</h2><p class="tp-brand-international">INTERNATIONAL</p><p><b>Your Travel Partner</b> &nbsp; | &nbsp; +91 96646 00928 &nbsp; | &nbsp; accuraa.international@gmail.com</p><h3 class="tp-doc-title">TRAVEL REQUIREMENTS</h3><div class="tp-print-footer"><span>Address: Gujarat, Kadi – 382715, India</span><span>Website: www.accuraainternational.online</span><span>Official Email: travel@accuraainternational.online</span></div></div>
   <h3 class="tp-no-print">Travel Requirements Form</h3><p class="tp-help tp-no-print">Fill in the details. Print or save the form as a PDF, or prepare a WhatsApp message to send your enquiry to Accuraa International.</p>
   <form id="tp-req-form"><div class="tp-grid">
    <div class="tp-subhead">Trip Details</div>
@@ -104,7 +108,7 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
   </form><p class="tp-note tp-no-print">Privacy note: information is not saved to a website database. WhatsApp opens only when the client clicks the button.</p>
  </div>
  <div class="tp-panel tp-hidden admin-private" id="tp-quote">
-  <div class="tp-letterhead"><img src="logo.png" alt="Accuraa International logo"><h2>Accuraa International</h2><p><b>Your Travel Partner</b></p><p>+91 96646 00928 | accuraa.international@gmail.com</p><p>Gujarat, Kadi – 382715, India</p><hr><h3>TRAVEL PACKAGE QUOTATION</h3></div>
+  <div class="tp-letterhead"><img src="logo.png" alt="Accuraa International logo"><h2>Accuraa</h2><p class="tp-brand-international">INTERNATIONAL</p><p><b>Your Travel Partner</b> &nbsp; | &nbsp; +91 96646 00928 &nbsp; | &nbsp; accuraa.international@gmail.com</p><h3 class="tp-doc-title">TRAVEL PACKAGE QUOTATION</h3><div class="tp-print-footer"><span>Address: Gujarat, Kadi – 382715, India</span><span>Website: www.accuraainternational.online</span><span>Official Email: travel@accuraainternational.online</span></div></div>
   <h3 class="tp-no-print">Quotation Generator</h3><p class="tp-help tp-no-print">Enter the supplier rates and itinerary. Total is calculated automatically. Print or save the quotation as a PDF to send to your client.</p>
   <form id="tp-quote-form"><div class="tp-grid">
    <div class="tp-subhead">Quotation & Client Details</div>
@@ -131,8 +135,19 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
 <a class="wa" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote." aria-label="WhatsApp Accuraa International">◉</a><footer><div class="container footer-row"><div>© 2026 Accuraa International. All rights reserved.</div><div>Your Travel Partner • Gujarat, India</div></div></footer><script>document.querySelectorAll('.navlinks a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.navlinks').classList.remove('open')))
 function tpVal(id){return (document.getElementById(id).value||'').trim()}
 function tpShow(which){var req=which==='req';var admin=which==='admin';document.getElementById('tp-req').classList.toggle('tp-hidden',!req);document.getElementById('tp-admin-login').classList.toggle('tp-hidden',req||which==='quote');document.getElementById('tp-quote').classList.toggle('tp-hidden',which!=='quote');document.getElementById('tp-tab-req').classList.toggle('active',req);document.getElementById('tp-tab-admin').classList.toggle('active',admin||which==='quote');if(which==='quote')tpUpdateTotal()}
-function tpPrint(which){var f=document.getElementById(which==='req'?'tp-req-form':'tp-quote-form');if(!f.reportValidity())return;tpShow(which);document.body.classList.add('tp-printing');document.getElementById(which==='req'?'tp-req':'tp-quote').classList.add('tp-print-target');window.print()}
-window.addEventListener('afterprint',function(){document.body.classList.remove('tp-printing');document.querySelectorAll('.tp-print-target').forEach(function(e){e.classList.remove('tp-print-target')})});
+function tpPrint(which){
+ var form=document.getElementById(which==='req'?'tp-req-form':'tp-quote-form');
+ if(!form.reportValidity())return;
+ var source=document.getElementById(which==='req'?'tp-req':'tp-quote');
+ var old=document.getElementById('tp-print-root');if(old)old.remove();
+ var root=document.createElement('div');root.id='tp-print-root';
+ var clone=source.cloneNode(true);clone.classList.remove('tp-hidden','admin-private');clone.querySelectorAll('.tp-no-print,.tp-actions,.tp-note').forEach(function(e){e.remove()});
+ var printFooter=clone.querySelector('.tp-print-footer');if(printFooter)clone.appendChild(printFooter);
+  var originalFields=source.querySelectorAll('input,textarea,select'),cloneFields=clone.querySelectorAll('input,textarea,select');
+ originalFields.forEach(function(el,i){var copy=cloneFields[i];if(!copy)return;if(el.tagName==='TEXTAREA')copy.textContent=el.value;else if(el.tagName==='SELECT'){Array.from(copy.options).forEach(function(o,j){o.selected=el.options[j]&&el.options[j].selected})}else{copy.value=el.value;copy.setAttribute('value',el.value)}});
+ root.appendChild(clone);document.body.appendChild(root);document.body.classList.add('tp-printing');window.print();
+}
+window.addEventListener('afterprint',function(){document.body.classList.remove('tp-printing');var root=document.getElementById('tp-print-root');if(root)root.remove()});
 function tpSendReq(){var f=document.getElementById('tp-req-form');if(!f.reportValidity())return;var m=['Hello Accuraa International, I would like a travel package quotation.','Destination: '+tpVal('tp-destination'),'Number of days: '+tpVal('tp-days'),'Client name: '+tpVal('tp-name'),'Contact number: '+tpVal('tp-phone'),'Adults (above 12): '+(tpVal('tp-adults')||'0'),'Children (1–6 years): '+(tpVal('tp-kids1')||'0'),'Children (6–12 years): '+(tpVal('tp-kids2')||'0'),'Check-in / start date: '+(tpVal('tp-checkin')||'Not specified'),'Check-out / end date: '+(tpVal('tp-checkout')||'Not specified'),'Number of rooms: '+(tpVal('tp-rooms')||'Not specified'),'Travelling as: '+tpVal('tp-type'),'Budget: '+(tpVal('tp-budget')||'Not specified'),'Special requirements: '+(tpVal('tp-notes')||'None')].join('\\n');window.open('https://wa.me/919664600928?text='+encodeURIComponent(m),'_blank','noopener')}
 function tpUpdateTotal(){var ids=['tp-qhotelcost','tp-qtransport','tp-qtravel','tp-qactivities','tp-qmarkup'];var total=ids.reduce(function(sum,id){return sum+(parseFloat(document.getElementById(id).value)||0)},0)-(parseFloat(document.getElementById('tp-qdiscount').value)||0);document.getElementById('tp-qtotal').value=Math.max(0,total).toFixed(2)}
 ['tp-qhotelcost','tp-qtransport','tp-qtravel','tp-qactivities','tp-qmarkup','tp-qdiscount'].forEach(function(id){document.getElementById(id).addEventListener('input',tpUpdateTotal)});
