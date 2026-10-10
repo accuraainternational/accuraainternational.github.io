@@ -20,6 +20,7 @@
 .tp-btn-main{background:var(--n);color:#fff}.tp-btn-gold{background:var(--g2);color:#14223a}.tp-btn-line{background:#fff;border:1px solid var(--n);color:var(--n)}
 .tp-hidden{display:none!important}
 .tp-letterhead{display:none}
+.tp-print-footer{display:none}
 .tp-note{font-size:12px;color:var(--m);margin-top:12px}
 @media(max-width:700px){.tp-grid{grid-template-columns:1fr}.tp-full,.tp-subhead{grid-column:auto}.tp-panel{padding:17px}}
 /* Private Admin Quotation Desk */
@@ -41,26 +42,28 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
   body.tp-printing{font-family:Arial,Helvetica,sans-serif!important;color:#172238!important;font-size:9pt!important;line-height:1.25!important;background:#fff!important;height:auto!important;min-height:0!important;overflow:visible!important}
   body.tp-printing *{box-shadow:none!important;text-shadow:none!important}
   /* Remove the normal website layout from print flow so hidden homepage sections cannot create blank pages. */
+  /* Keep only the selected printable form in the document flow. display:none (not visibility:hidden) prevents blank pages. */
   body.tp-printing>header,body.tp-printing>.wa,body.tp-printing>footer{display:none!important}
   body.tp-printing>main{display:block!important;margin:0!important;padding:0!important;height:auto!important;min-height:0!important}
   body.tp-printing>main>section:not(#travel-desk),body.tp-printing>main>.stats{display:none!important}
   body.tp-printing #travel-desk{display:block!important;margin:0!important;padding:0!important;min-height:0!important;height:auto!important;background:#fff!important}
   body.tp-printing #travel-desk>.tp-wrap{display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+  body.tp-printing #travel-desk>.tp-wrap>*:not(.tp-panel.tp-print-target){display:none!important}
   body.tp-printing #travel-desk .section-head,body.tp-printing #travel-desk .tp-tabs,body.tp-printing #travel-desk .admin-login{display:none!important}
   body.tp-printing #travel-desk .tp-panel{display:none!important;visibility:hidden!important}
   body.tp-printing #travel-desk .tp-panel.tp-print-target{display:block!important;visibility:visible!important;position:static!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#fff!important;overflow:visible!important;break-inside:auto!important;page-break-inside:auto!important}
   body.tp-printing #travel-desk .tp-panel.tp-print-target *{visibility:visible!important}
   body.tp-printing .tp-no-print{display:none!important}
-  body.tp-printing .tp-letterhead{display:grid!important;grid-template-columns:94px minmax(0,1fr);grid-template-rows:auto auto auto auto auto auto;column-gap:12px;align-items:center;text-align:left!important;border-bottom:3px solid #102b5c;padding:0 0 7px;margin:0 0 8px;color:#172238;position:relative;break-inside:avoid!important;page-break-inside:avoid!important}
-  body.tp-printing .tp-letterhead img{grid-column:1;grid-row:1/7;width:88px;height:78px;object-fit:contain;justify-self:center}
-  body.tp-printing .tp-letterhead h2{grid-column:2;font-family:Georgia,'Times New Roman',serif!important;font-size:25pt!important;line-height:1.02;color:#102b5c!important;margin:0!important;font-weight:700;letter-spacing:.1px}
+  body.tp-printing .tp-letterhead{display:grid!important;grid-template-columns:94px minmax(0,1fr);grid-template-rows:auto auto auto auto auto;column-gap:12px;align-items:center;text-align:left!important;border-bottom:3px solid #102b5c;padding:0 0 7px;margin:0 0 8px;color:#172238;position:relative;break-inside:avoid!important;page-break-inside:avoid!important}
+  body.tp-printing .tp-letterhead img{grid-column:1;grid-row:1/6;width:88px;height:78px;object-fit:contain;justify-self:center}
+  body.tp-printing .tp-letterhead h2{grid-column:2;font-family:Georgia,'Times New Roman',serif!important;font-size:29pt!important;line-height:1.0;color:#102b5c!important;margin:0!important;font-weight:600;letter-spacing:.1px}
   body.tp-printing .tp-letterhead p{grid-column:2;margin:1px 0!important;font-size:8pt!important;line-height:1.15}
-  body.tp-printing .tp-letterhead .brand-international{grid-row:2;font-size:8.5pt!important;letter-spacing:3px!important;font-weight:800!important;color:#102b5c!important}
-  body.tp-printing .tp-letterhead .brand-tagline{grid-row:3;font-size:7pt!important;font-weight:600!important;color:#657083!important}
+  body.tp-printing .tp-letterhead .brand-international{grid-row:2;font-size:8.5pt!important;letter-spacing:3px!important;font-weight:600!important;color:#102b5c!important}
+  body.tp-printing .tp-letterhead .brand-tagline{grid-row:3;font-size:7pt!important;font-weight:400!important;color:#657083!important}
   body.tp-printing .tp-letterhead .brand-contact{grid-row:4;font-size:8pt!important}
-  body.tp-printing .tp-letterhead .brand-address{grid-row:5;font-size:7.5pt!important}
+  body.tp-printing .tp-letterhead .brand-address{display:none!important}
   body.tp-printing .tp-letterhead hr{display:none!important}
-  body.tp-printing .tp-letterhead h3{grid-column:2;grid-row:6;font-size:10pt!important;letter-spacing:1px;color:#9a741d!important;margin:3px 0 0!important;border:0!important;font-weight:800}
+  body.tp-printing .tp-letterhead h3{grid-column:2;grid-row:5;font-size:10pt!important;letter-spacing:1px;color:#9a741d!important;margin:3px 0 0!important;border:0!important;font-weight:800}
   body.tp-printing .tp-panel h3.tp-no-print{display:none!important}
   body.tp-printing .tp-grid{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:5px 12px!important;align-items:start!important}
   body.tp-printing .tp-subhead{grid-column:1/-1!important;background:#edf2f8!important;border-left:4px solid #102b5c;padding:4px 7px!important;margin:3px 0 1px!important;color:#102b5c!important;font-size:8.5pt!important;letter-spacing:.2px;break-after:avoid!important;page-break-after:avoid!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
@@ -76,6 +79,10 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
   body.tp-printing #tp-quote .tp-field label{font-size:7pt!important}
   body.tp-printing #tp-quote #tp-qterms{min-height:30px!important}
   body.tp-printing .tp-panel.tp-print-target form{margin:0!important;padding:0!important}
+  body.tp-printing .tp-print-footer{display:grid!important;grid-template-columns:1fr 1fr 1.25fr;gap:10px;background:#082957!important;color:#fff!important;border-top:3px solid #d6a62a;padding:9px 10px;margin-top:12px;font-size:7pt!important;line-height:1.2!important;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important;break-inside:avoid!important;page-break-inside:avoid!important}
+  body.tp-printing .tp-print-footer b{display:block;color:#f2c75c!important;font-size:7pt!important;margin-bottom:2px}
+  body.tp-printing .tp-print-footer span{overflow-wrap:anywhere}
+  body.tp-printing .tp-letterhead h2,body.tp-printing .tp-letterhead .brand-international,body.tp-printing .tp-letterhead .brand-tagline,body.tp-printing .tp-letterhead .brand-contact,body.tp-printing .tp-letterhead h3{grid-column:2!important}
 }</style><title>Accuraa International | Flight, Train & Hotel Booking</title>
 <meta name="description" content="Accuraa International – Your Travel Partner in Kadi, Gujarat. Flight booking, train booking, hotel reservations, tour packages and customized travel assistance.">
 <meta name="robots" content="index, follow"><link rel="icon" type="image/png" href="Accuraa_International_Favicon_512x512.png"></head><body>
@@ -96,7 +103,7 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
    <form id="tp-admin-login-form"><div class="admin-login-grid"><div><label for="tp-admin-email">Admin email</label><input id="tp-admin-email" type="email" autocomplete="username" required placeholder="admin email"></div><div><label for="tp-admin-password">Password</label><input id="tp-admin-password" type="password" autocomplete="current-password" required placeholder="Your password"></div></div><div class="tp-actions"><button class="tp-btn tp-btn-main" id="tp-admin-signin" type="submit">Sign in</button><button class="tp-btn tp-btn-line tp-hidden" id="tp-admin-signout" type="button">Sign out</button><button class="tp-btn tp-btn-gold tp-hidden" id="tp-admin-open-quote" type="button">Open Quotation Generator</button></div><p class="admin-status" id="tp-admin-status" role="status" aria-live="polite">Sign in is restricted to the authorized admin email.</p></form>
   </div>
  <div class="tp-panel" id="tp-req">
-  <div class="tp-letterhead"><img src="logo.png" alt="Accuraa International logo"><h2>Accuraa</h2><p class="brand-international">INTERNATIONAL</p><p class="brand-tagline">Your Travel Partner</p><p class="brand-contact">+91 96646 00928 | accuraa.international@gmail.com</p><p class="brand-address">Gujarat, Kadi – 382715, India</p><hr><h3>TRAVEL REQUIREMENTS</h3></div>
+  <div class="tp-letterhead"><img src="logo.png" alt="Accuraa International logo"><h2>Accuraa</h2><p class="brand-international">INTERNATIONAL</p><p class="brand-tagline">Your Travel Partner</p><p class="brand-contact">+91 96646 00928 | accuraa.international@gmail.com</p><hr><h3>TRAVEL REQUIREMENTS</h3></div>
   <h3 class="tp-no-print">Travel Requirements Form</h3><p class="tp-help tp-no-print">Fill in the details. Print or save the form as a PDF, or prepare a WhatsApp message to send your enquiry to Accuraa International.</p>
   <form id="tp-req-form"><div class="tp-grid">
    <div class="tp-subhead">Trip Details</div>
@@ -117,9 +124,10 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
   </div>
   <div class="tp-actions tp-no-print"><button class="tp-btn tp-btn-main" type="button" onclick="tpPrint('req')">Print / Save Requirements PDF</button><button class="tp-btn tp-btn-gold" type="button" onclick="tpSendReq()">Prepare WhatsApp Enquiry</button><button class="tp-btn tp-btn-line" type="reset">Clear Form</button></div>
   </form><p class="tp-note tp-no-print">Privacy note: information is not saved to a website database. WhatsApp opens only when the client clicks the button.</p>
+  <div class="tp-print-footer"><div><b>ADDRESS</b><span>Gujarat, Kadi – 382715, India</span></div><div><b>WEBSITE</b><span>www.accuraainternational.online</span></div><div><b>OFFICIAL EMAIL</b><span>travel@accuraainternational.online</span></div></div>
  </div>
  <div class="tp-panel tp-hidden admin-private" id="tp-quote">
-  <div class="tp-letterhead"><img src="logo.png" alt="Accuraa International logo"><h2>Accuraa</h2><p class="brand-international">INTERNATIONAL</p><p class="brand-tagline">Your Travel Partner</p><p class="brand-contact">+91 96646 00928 | accuraa.international@gmail.com</p><p class="brand-address">Gujarat, Kadi – 382715, India</p><hr><h3>TRAVEL PACKAGE QUOTATION</h3></div>
+  <div class="tp-letterhead"><img src="logo.png" alt="Accuraa International logo"><h2>Accuraa</h2><p class="brand-international">INTERNATIONAL</p><p class="brand-tagline">Your Travel Partner</p><p class="brand-contact">+91 96646 00928 | accuraa.international@gmail.com</p><hr><h3>TRAVEL PACKAGE QUOTATION</h3></div>
   <h3 class="tp-no-print">Quotation Generator</h3><p class="tp-help tp-no-print">Enter the supplier rates and itinerary. Total is calculated automatically. Print or save the quotation as a PDF to send to your client.</p>
   <form id="tp-quote-form"><div class="tp-grid">
    <div class="tp-subhead">Quotation & Client Details</div>
@@ -140,6 +148,7 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
    <div class="tp-field tp-full"><label for="tp-qterms">Quotation validity / payment terms</label><textarea id="tp-qterms">Rates and availability are subject to reconfirmation at the time of booking. Package inclusions and exclusions are as specified above. Booking is confirmed only after payment and supplier confirmation.</textarea></div>
   </div><div class="tp-actions tp-no-print"><button class="tp-btn tp-btn-main" type="button" onclick="tpPrint('quote')">Print / Save Quotation PDF</button><button class="tp-btn tp-btn-gold" type="button" onclick="tpShareQuote()">Prepare WhatsApp Quotation Message</button><button class="tp-btn tp-btn-line" type="reset" onclick="setTimeout(tpUpdateTotal,0)">Clear Form</button></div></form>
   <p class="tp-note tp-no-print">This tool calculates the quotation in your browser. It does not connect to supplier APIs or automatically store submissions.</p>
+  <div class="tp-print-footer"><div><b>ADDRESS</b><span>Gujarat, Kadi – 382715, India</span></div><div><b>WEBSITE</b><span>www.accuraainternational.online</span></div><div><b>OFFICIAL EMAIL</b><span>travel@accuraainternational.online</span></div></div>
  </div>
 </div></section>
 <section class="contact" id="contact"><div class="container"><div class="section-head"><div class="eyebrow">Let's plan your journey</div><h2>Tell us where you want to go</h2><p>For a quotation, send your destination, travel dates, number of travellers and preferred services.</p></div><div class="contact-grid"><div class="contact-card"><h3 style="color:var(--n);font-size:24px">Contact Accuraa International</h3><div class="contact-item"><div>📞</div><div><b>Phone</b><span>+91 96646 00928</span></div></div><div class="contact-item"><div>💬</div><div><b>WhatsApp</b><span>Available for enquiries & quotations</span></div></div><div class="contact-item"><div>✉️</div><div><b>Email</b><span>accuraa.international@gmail.com</span></div></div><div class="contact-item"><div>📍</div><div><b>Location</b><span>Gujarat, Kadi – 382715, India</span></div></div><div class="contact-actions"><a class="btn btn-gold" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote.">WhatsApp Us</a><a class="btn" style="background:var(--n);color:#fff" href="mailto:accuraa.international@gmail.com">Email Us</a></div></div><div class="contact-card"><h3 style="color:var(--n);font-size:24px">Request a Quote</h3><p style="color:var(--m);margin:12px 0 20px">Send us your requirements on WhatsApp and we'll help you with suitable options.</p><ul style="color:var(--m);padding-left:20px;display:grid;gap:8px"><li>Destination / route</li><li>Travel dates</li><li>Number of travellers</li><li>Flight / train / hotel requirement</li><li>Any special preferences</li></ul><a class="btn btn-gold" style="margin-top:25px" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote.%0A%0ADestination%3A%0ATravel%20dates%3A%0ANo.%20of%20travellers%3A%0AService%20required%3A">Start Enquiry</a></div></div></div></section></main>
