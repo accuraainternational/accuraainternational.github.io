@@ -22,6 +22,19 @@
 .tp-letterhead{display:none}
 .tp-note{font-size:12px;color:var(--m);margin-top:12px}
 @media(max-width:700px){.tp-grid{grid-template-columns:1fr}.tp-full,.tp-subhead{grid-column:auto}.tp-panel{padding:17px}}
+/* Private Admin Quotation Desk */
+.admin-private{display:none!important}
+body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
+.admin-login{border:1px solid #dbe3ee;border-top:4px solid var(--g);background:#fff;border-radius:18px;padding:24px;box-shadow:var(--s);max-width:650px;margin:0 auto 24px}
+.admin-login h3{color:var(--n);font-size:22px;margin-bottom:6px}
+.admin-login p{color:var(--m);font-size:14px;margin-bottom:16px}
+.admin-login-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.admin-login label{display:block;font-size:13px;font-weight:800;color:#334155;margin-bottom:5px}
+.admin-login input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font:inherit}
+.admin-status{font-size:13px!important;margin:12px 0 0!important;min-height:18px}
+.admin-status.error{color:#b42318!important}.admin-status.success{color:#167044!important}
+.admin-only-badge{display:inline-block;background:#f9efcc;color:#674b00;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:800;margin-bottom:8px}
+@media(max-width:700px){.admin-login-grid{grid-template-columns:1fr}}
 @page{size:A4;margin:12mm 13mm 13mm}
 @media print{
  body.tp-printing{font-family:Arial,Helvetica,sans-serif!important;color:#172238!important;font-size:9.5pt!important;line-height:1.35!important;background:#fff!important}
@@ -58,8 +71,14 @@
 <section id="about"><div class="container about"><div class="about-box"><div><div class="eyebrow">About Accuraa</div><h3>Your journey.<br><span>Our assistance.</span></h3></div></div><div class="about-text"><div class="eyebrow">Why Accuraa International</div><h2>Your Travel Partner</h2><p>Accuraa International helps travellers arrange the key elements of their journey — from flights and trains to hotels and customized holiday plans.</p><p>Our approach is simple: understand your requirements, provide suitable options, and make the booking process easier.</p><div class="checks"><div><span>✓</span>Personalized travel assistance</div><div><span>✓</span>Domestic & international options</div><div><span>✓</span>Easy quotation & enquiry process</div><div><span>✓</span>Support through WhatsApp</div></div></div></div></section>
 
 <section class="tp-section" id="travel-desk"><div class="tp-wrap">
- <div class="section-head"><div class="eyebrow">Plan with Accuraa</div><h2>Travel Planning Desk</h2><p>Share your holiday requirements and create professional package quotations with Accuraa International branding.</p></div>
- <div class="tp-tabs tp-no-print"><button class="tp-tab active" id="tp-tab-req" type="button" onclick="tpShow('req')">Travel Requirements Form</button><button class="tp-tab" id="tp-tab-quote" type="button" onclick="tpShow('quote')">Quotation Generator</button></div>
+ <div class="section-head"><div class="eyebrow">Plan with Accuraa</div><h2>Travel Planning Desk</h2><p>Share your holiday requirements. The premium quotation generator is available separately to authorized Accuraa International admin users.</p></div>
+ <div class="tp-tabs tp-no-print"><button class="tp-tab active" id="tp-tab-req" type="button" onclick="tpShow('req')">Travel Requirements Form</button><button class="tp-tab" id="tp-tab-admin" type="button" onclick="document.getElementById('tp-admin-login').scrollIntoView({behavior:'smooth',block:'center'})">Admin Quotation Desk 🔒</button></div>
+  <div class="admin-login tp-no-print" id="tp-admin-login">
+   <span class="admin-only-badge">PRIVATE • ADMIN ACCESS</span>
+   <h3>Premium Quotation Desk</h3>
+   <p>Sign in with the authorized Accuraa International admin account to open the quotation generator. Clients can continue using the Travel Requirements Form above.</p>
+   <form id="tp-admin-login-form"><div class="admin-login-grid"><div><label for="tp-admin-email">Admin email</label><input id="tp-admin-email" type="email" autocomplete="username" required placeholder="admin email"></div><div><label for="tp-admin-password">Password</label><input id="tp-admin-password" type="password" autocomplete="current-password" required placeholder="Your password"></div></div><div class="tp-actions"><button class="tp-btn tp-btn-main" id="tp-admin-signin" type="submit">Sign in</button><button class="tp-btn tp-btn-line tp-hidden" id="tp-admin-signout" type="button">Sign out</button><button class="tp-btn tp-btn-gold tp-hidden" id="tp-admin-open-quote" type="button">Open Quotation Generator</button></div><p class="admin-status" id="tp-admin-status" role="status" aria-live="polite">Sign in is restricted to the authorized admin email.</p></form>
+  </div>
  <div class="tp-panel" id="tp-req">
   <div class="tp-letterhead"><img src="logo.png" alt="Accuraa International logo"><h2>Accuraa International</h2><p><b>Your Travel Partner</b></p><p>+91 96646 00928 | accuraa.international@gmail.com</p><p>Gujarat, Kadi – 382715, India</p><hr><h3>TRAVEL REQUIREMENTS</h3></div>
   <h3 class="tp-no-print">Travel Requirements Form</h3><p class="tp-help tp-no-print">Fill in the details. Print or save the form as a PDF, or prepare a WhatsApp message to send your enquiry to Accuraa International.</p>
@@ -83,7 +102,7 @@
   <div class="tp-actions tp-no-print"><button class="tp-btn tp-btn-main" type="button" onclick="tpPrint('req')">Print / Save Requirements PDF</button><button class="tp-btn tp-btn-gold" type="button" onclick="tpSendReq()">Prepare WhatsApp Enquiry</button><button class="tp-btn tp-btn-line" type="reset">Clear Form</button></div>
   </form><p class="tp-note tp-no-print">Privacy note: information is not saved to a website database. WhatsApp opens only when the client clicks the button.</p>
  </div>
- <div class="tp-panel tp-hidden" id="tp-quote">
+ <div class="tp-panel tp-hidden admin-private" id="tp-quote">
   <div class="tp-letterhead"><img src="logo.png" alt="Accuraa International logo"><h2>Accuraa International</h2><p><b>Your Travel Partner</b></p><p>+91 96646 00928 | accuraa.international@gmail.com</p><p>Gujarat, Kadi – 382715, India</p><hr><h3>TRAVEL PACKAGE QUOTATION</h3></div>
   <h3 class="tp-no-print">Quotation Generator</h3><p class="tp-help tp-no-print">Enter the supplier rates and itinerary. Total is calculated automatically. Print or save the quotation as a PDF to send to your client.</p>
   <form id="tp-quote-form"><div class="tp-grid">
@@ -110,7 +129,7 @@
 <section class="contact" id="contact"><div class="container"><div class="section-head"><div class="eyebrow">Let's plan your journey</div><h2>Tell us where you want to go</h2><p>For a quotation, send your destination, travel dates, number of travellers and preferred services.</p></div><div class="contact-grid"><div class="contact-card"><h3 style="color:var(--n);font-size:24px">Contact Accuraa International</h3><div class="contact-item"><div>📞</div><div><b>Phone</b><span>+91 96646 00928</span></div></div><div class="contact-item"><div>💬</div><div><b>WhatsApp</b><span>Available for enquiries & quotations</span></div></div><div class="contact-item"><div>✉️</div><div><b>Email</b><span>accuraa.international@gmail.com</span></div></div><div class="contact-item"><div>📍</div><div><b>Location</b><span>Gujarat, Kadi – 382715, India</span></div></div><div class="contact-actions"><a class="btn btn-gold" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote.">WhatsApp Us</a><a class="btn" style="background:var(--n);color:#fff" href="mailto:accuraa.international@gmail.com">Email Us</a></div></div><div class="contact-card"><h3 style="color:var(--n);font-size:24px">Request a Quote</h3><p style="color:var(--m);margin:12px 0 20px">Send us your requirements on WhatsApp and we'll help you with suitable options.</p><ul style="color:var(--m);padding-left:20px;display:grid;gap:8px"><li>Destination / route</li><li>Travel dates</li><li>Number of travellers</li><li>Flight / train / hotel requirement</li><li>Any special preferences</li></ul><a class="btn btn-gold" style="margin-top:25px" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote.%0A%0ADestination%3A%0ATravel%20dates%3A%0ANo.%20of%20travellers%3A%0AService%20required%3A">Start Enquiry</a></div></div></div></section></main>
 <a class="wa" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote." aria-label="WhatsApp Accuraa International">◉</a><footer><div class="container footer-row"><div>© 2026 Accuraa International. All rights reserved.</div><div>Your Travel Partner • Gujarat, India</div></div></footer><script>document.querySelectorAll('.navlinks a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.navlinks').classList.remove('open')))
 function tpVal(id){return (document.getElementById(id).value||'').trim()}
-function tpShow(which){document.getElementById('tp-req').classList.toggle('tp-hidden',which!=='req');document.getElementById('tp-quote').classList.toggle('tp-hidden',which!=='quote');document.getElementById('tp-tab-req').classList.toggle('active',which==='req');document.getElementById('tp-tab-quote').classList.toggle('active',which==='quote');if(which==='quote')tpUpdateTotal()}
+function tpShow(which){document.getElementById('tp-req').classList.toggle('tp-hidden',which!=='req');document.getElementById('tp-quote').classList.toggle('tp-hidden',which!=='quote');document.getElementById('tp-tab-req').classList.toggle('active',which==='req');var quoteTab=document.getElementById('tp-tab-quote');if(quoteTab)quoteTab.classList.toggle('active',which==='quote');if(which==='quote')tpUpdateTotal()}
 function tpPrint(which){var f=document.getElementById(which==='req'?'tp-req-form':'tp-quote-form');if(!f.reportValidity())return;tpShow(which);document.body.classList.add('tp-printing');document.getElementById(which==='req'?'tp-req':'tp-quote').classList.add('tp-print-target');window.print()}
 window.addEventListener('afterprint',function(){document.body.classList.remove('tp-printing');document.querySelectorAll('.tp-print-target').forEach(function(e){e.classList.remove('tp-print-target')})});
 function tpSendReq(){var f=document.getElementById('tp-req-form');if(!f.reportValidity())return;var m=['Hello Accuraa International, I would like a travel package quotation.','Destination: '+tpVal('tp-destination'),'Number of days: '+tpVal('tp-days'),'Client name: '+tpVal('tp-name'),'Contact number: '+tpVal('tp-phone'),'Adults (above 12): '+(tpVal('tp-adults')||'0'),'Children (1–6 years): '+(tpVal('tp-kids1')||'0'),'Children (6–12 years): '+(tpVal('tp-kids2')||'0'),'Check-in / start date: '+(tpVal('tp-checkin')||'Not specified'),'Check-out / end date: '+(tpVal('tp-checkout')||'Not specified'),'Number of rooms: '+(tpVal('tp-rooms')||'Not specified'),'Travelling as: '+tpVal('tp-type'),'Budget: '+(tpVal('tp-budget')||'Not specified'),'Special requirements: '+(tpVal('tp-notes')||'None')].join('\\n');window.open('https://wa.me/919664600928?text='+encodeURIComponent(m),'_blank','noopener')}
@@ -118,4 +137,91 @@ function tpUpdateTotal(){var ids=['tp-qhotelcost','tp-qtransport','tp-qtravel','
 ['tp-qhotelcost','tp-qtransport','tp-qtravel','tp-qactivities','tp-qmarkup','tp-qdiscount'].forEach(function(id){document.getElementById(id).addEventListener('input',tpUpdateTotal)});
 function tpShareQuote(){var f=document.getElementById('tp-quote-form');if(!f.reportValidity())return;tpUpdateTotal();var m=['Hello '+tpVal('tp-qname')+',','Please find the travel package quotation from Accuraa International.','Destination: '+tpVal('tp-qdest'),'Travel dates: '+(tpVal('tp-qdates')||'As discussed'),'Travellers: '+(tpVal('tp-qpax')||'As discussed'),'Rooms: '+(tpVal('tp-qrooms')||'As discussed'),'Total package price: ₹'+tpVal('tp-qtotal'),'Advance payment: ₹'+(tpVal('tp-qadvance')||'0'),'Terms: '+tpVal('tp-qterms'),'Regards, Accuraa International | +91 96646 00928'].join('\\n');window.open('https://wa.me/?text='+encodeURIComponent(m),'_blank','noopener')}
 document.getElementById('tp-qdate').value=new Date().toISOString().slice(0,10);
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+// Firebase web configuration for the Accuraa-Admin-Desk project.
+const firebaseConfig = {
+  apiKey: "AIzaSyDaQXd1-YbfWV7myZ3WEmopx9mFuJ4Nj_4",
+  authDomain: "accuraa-admin-desk.firebaseapp.com",
+  projectId: "accuraa-admin-desk",
+  storageBucket: "accuraa-admin-desk.firebasestorage.app",
+  messagingSenderId: "302461714802",
+  appId: "1:302461714802:web:2f7a8290db9f6a2a5f5deb"
+};
+const ADMIN_EMAIL = "accuraa.international@gmail.com";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const loginForm = document.getElementById('tp-admin-login-form');
+const emailInput = document.getElementById('tp-admin-email');
+const passwordInput = document.getElementById('tp-admin-password');
+const statusBox = document.getElementById('tp-admin-status');
+const signInButton = document.getElementById('tp-admin-signin');
+const signOutButton = document.getElementById('tp-admin-signout');
+const openQuoteButton = document.getElementById('tp-admin-open-quote');
+function adminStatus(message, kind='') {
+  statusBox.textContent = message;
+  statusBox.className = 'admin-status' + (kind ? ' ' + kind : '');
+}
+function lockAdminDesk() {
+  document.body.classList.remove('admin-unlocked');
+  document.getElementById('tp-quote').classList.add('tp-hidden');
+  document.getElementById('tp-tab-quote')?.classList.add('tp-hidden');
+  signInButton.classList.remove('tp-hidden');
+  signOutButton.classList.add('tp-hidden');
+  openQuoteButton.classList.add('tp-hidden');
+}
+function unlockAdminDesk(user) {
+  document.body.classList.add('admin-unlocked');
+  signInButton.classList.add('tp-hidden');
+  signOutButton.classList.remove('tp-hidden');
+  openQuoteButton.classList.remove('tp-hidden');
+  adminStatus('Signed in as ' + user.email + '. Admin quotation tools are unlocked in this browser session.', 'success');
+}
+loginForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const email = emailInput.value.trim().toLowerCase();
+  if (email !== ADMIN_EMAIL) {
+    adminStatus('Access denied. Only the authorized Accuraa admin email can sign in.', 'error');
+    return;
+  }
+  signInButton.disabled = true;
+  adminStatus('Signing in securely…');
+  try {
+    const credential = await signInWithEmailAndPassword(auth, email, passwordInput.value);
+    if ((credential.user.email || '').toLowerCase() !== ADMIN_EMAIL) {
+      await signOut(auth);
+      lockAdminDesk();
+      adminStatus('Access denied: this account is not the authorized admin.', 'error');
+    }
+    passwordInput.value = '';
+  } catch (error) {
+    const message = error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found'
+      ? 'Login failed. Check the admin email and password, then try again.'
+      : error.code === 'auth/too-many-requests'
+      ? 'Too many attempts. Wait a while before trying again.'
+      : 'Could not sign in. Check your internet connection and Firebase Authentication settings.';
+    adminStatus(message, 'error');
+  } finally {
+    signInButton.disabled = false;
+  }
+});
+signOutButton.addEventListener('click', async () => {
+  try { await signOut(auth); lockAdminDesk(); adminStatus('You have signed out. The quotation generator is locked.', 'success'); }
+  catch { adminStatus('Sign-out failed. Please reload the page.', 'error'); }
+});
+openQuoteButton.addEventListener('click', () => {
+  if (!auth.currentUser || (auth.currentUser.email || '').toLowerCase() !== ADMIN_EMAIL) {
+    lockAdminDesk(); adminStatus('Please sign in with the authorized admin account.', 'error'); return;
+  }
+  document.getElementById('tp-quote').classList.remove('tp-hidden');
+  if (typeof window.tpShow === 'function') window.tpShow('quote');
+  document.getElementById('tp-quote').scrollIntoView({behavior:'smooth', block:'start'});
+});
+onAuthStateChanged(auth, (user) => {
+  if (user && (user.email || '').toLowerCase() === ADMIN_EMAIL) unlockAdminDesk(user);
+  else { if (user) signOut(auth).catch(() => {}); lockAdminDesk(); adminStatus('Sign in with the authorized Accuraa admin email to access quotations.'); }
+});
 </script></body></html>
