@@ -22,25 +22,35 @@
 .tp-letterhead{display:none}
 .tp-note{font-size:12px;color:var(--m);margin-top:12px}
 @media(max-width:700px){.tp-grid{grid-template-columns:1fr}.tp-full,.tp-subhead{grid-column:auto}.tp-panel{padding:17px}}
+@page{size:A4;margin:12mm 13mm 13mm}
 @media print{
+ body.tp-printing{font-family:Arial,Helvetica,sans-serif!important;color:#172238!important;font-size:9.5pt!important;line-height:1.35!important;background:#fff!important}
+ body.tp-printing *{box-shadow:none!important;text-shadow:none!important}
  body.tp-printing *{visibility:hidden!important}
  body.tp-printing .tp-print-target,body.tp-printing .tp-print-target *{visibility:visible!important}
- body.tp-printing .tp-print-target{position:absolute!important;left:0!important;top:0!important;width:100%!important;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;background:#fff!important}
+ body.tp-printing .tp-print-target{position:absolute!important;left:0!important;top:0!important;width:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#fff!important}
  body.tp-printing .tp-no-print{display:none!important}
- body.tp-printing .tp-letterhead{display:block!important;text-align:center;border-bottom:2px solid #173c83;padding:0 0 12px;margin-bottom:16px;color:#111}
- body.tp-printing .tp-letterhead img{width:78px;height:78px;object-fit:contain}
- body.tp-printing .tp-letterhead h2{font-size:20pt;color:#173c83;margin:4px}
- body.tp-printing .tp-letterhead p{margin:2px;font-size:9pt}
- body.tp-printing .tp-field input,body.tp-printing .tp-field select,body.tp-printing .tp-field textarea{border:0;border-bottom:1px solid #bbb;border-radius:0;padding:3px 0;background:transparent;color:#111;appearance:none}
- body.tp-printing .tp-field{break-inside:avoid}
- body.tp-printing .tp-field textarea{min-height:32px}
+ body.tp-printing .tp-letterhead{display:grid!important;grid-template-columns:72px 1fr;column-gap:14px;align-items:center;text-align:left!important;border-bottom:3px solid #102b5c;padding:0 0 10px;margin:0 0 12px;color:#172238;position:relative}
+ body.tp-printing .tp-letterhead img{grid-column:1;grid-row:1/5;width:68px;height:68px;object-fit:contain;justify-self:center}
+ body.tp-printing .tp-letterhead h2{grid-column:2;font-size:19pt!important;line-height:1.1;color:#102b5c!important;margin:0 0 2px!important;font-weight:800;letter-spacing:.2px}
+ body.tp-printing .tp-letterhead p{grid-column:2;margin:1px 0!important;font-size:8.5pt!important;line-height:1.25}
+ body.tp-printing .tp-letterhead hr{display:none}
+ body.tp-printing .tp-letterhead h3{grid-column:2;font-size:11pt!important;letter-spacing:1.1px;color:#9a741d!important;margin:5px 0 0!important;border:0!important;font-weight:800}
+ body.tp-printing .tp-panel h3.tp-no-print{display:none!important}
+ body.tp-printing .tp-grid{grid-template-columns:1fr 1fr!important;gap:7px 14px!important}
+ body.tp-printing .tp-subhead{grid-column:1/-1!important;background:#edf2f8!important;border-left:4px solid #102b5c;padding:5px 8px!important;margin:3px 0 1px!important;color:#102b5c!important;font-size:9pt!important;letter-spacing:.3px;break-after:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ body.tp-printing .tp-field{gap:2px!important;break-inside:avoid!important;page-break-inside:avoid!important;min-width:0}
+ body.tp-printing .tp-field label{font-size:8pt!important;color:#475569!important;font-weight:700!important}
+ body.tp-printing .tp-field input,body.tp-printing .tp-field select,body.tp-printing .tp-field textarea{width:100%!important;border:0!important;border-bottom:1px solid #b9c4d3!important;border-radius:0!important;padding:2px 0 3px!important;min-height:18px!important;background:transparent!important;color:#111!important;font-size:9pt!important;appearance:none!important}
+ body.tp-printing .tp-field textarea{min-height:26px!important;resize:none!important}
+ body.tp-printing .tp-full{grid-column:1/-1!important}
+ body.tp-printing .tp-actions,body.tp-printing .tp-note{display:none!important}
+ body.tp-printing input::placeholder,body.tp-printing textarea::placeholder{color:transparent!important}
 }
 </style><title>Accuraa International | Flight, Train & Hotel Booking</title>
 <meta name="description" content="Accuraa International – Your Travel Partner in Kadi, Gujarat. Flight booking, train booking, hotel reservations, tour packages and customized travel assistance.">
 <meta name="robots" content="index, follow"><link rel="icon" type="image/png" href="Accuraa_International_Favicon_512x512.png"></head><body>
-<header><div class="container nav"><a class="brand" href="#home"><img src="logo.png" alt="Accuraa International"></a><button class="menu" aria-label="Open menu" onclick="document.querySelector('.navlinks').classList.toggle('open')">☰</button><nav class="navlinks"><a href="#home">Home</a><a href="#services">Services</a><a href="#packages">Packages</a><a href="#about">About</a><a href="#contact">Contact</a>
-<a href="#travel-desk" style="background:#102b5c;color:#ffffff;padding:10px 14px;border-radius:8px;font-weight:700;text-decoration:none;display:inline-block;">Travel Planning Desk</a>
-<a class="nav-cta" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote.">Enquire Now</a></nav></div></header>
+<header><div class="container nav"><a class="brand" href="#home"><img src="logo.png" alt="Accuraa International"></a><button class="menu" aria-label="Open menu" onclick="document.querySelector('.navlinks').classList.toggle('open')">☰</button><nav class="navlinks"><a href="#home">Home</a><a href="#services">Services</a><a href="#packages">Packages</a><a href="#about">About</a><a href="#contact">Contact</a><a href="#travel-desk" style="background:#102b5c;color:#ffffff;padding:10px 14px;border-radius:8px;font-weight:700;text-decoration:none;display:inline-block;">Travel Planning Desk</a><a class="nav-cta" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote.">Enquire Now</a></nav></div></header>
 <main id="home"><section class="hero"><div class="container hero-inner"><div class="kicker">Your Travel Partner</div><h1>Travel with <span>Accuraa</span>.<br>Travel with confidence.</h1><p>Flight, train and hotel booking assistance — plus thoughtfully planned holiday packages for journeys across India and around the world.</p><div class="buttons"><a class="btn btn-gold" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote.">Get a Quote</a><a class="btn btn-outline" href="#services">Explore Services</a></div></div></section>
 <div class="container stats"><div class="stat"><div class="stat-icon">✈️</div><div><strong>Flight Booking</strong><small>Domestic & international</small></div></div><div class="stat"><div class="stat-icon">🚆</div><div><strong>Train Booking</strong><small>Travel assistance</small></div></div><div class="stat"><div class="stat-icon">🏨</div><div><strong>Hotel Booking</strong><small>Stay made simple</small></div></div></div>
 <section class="services" id="services"><div class="container"><div class="section-head"><div class="eyebrow">What we do</div><h2>Everything you need for your journey</h2><p>Tell us where you want to go. We'll help you plan the essential parts of your trip with personal assistance.</p></div><div class="grid"><div class="card"><div class="icon">✈️</div><h3>Flight Booking</h3><p>Assistance for domestic and international flight reservations, itinerary options and travel planning.</p></div><div class="card"><div class="icon">🚆</div><h3>Train Booking</h3><p>Convenient train-ticket booking assistance for your travel plans within India.</p></div><div class="card"><div class="icon">🏨</div><h3>Hotel Booking</h3><p>Find suitable hotels and stays based on your destination, dates and preferences.</p></div><div class="card"><div class="icon">🌍</div><h3>Tour Packages</h3><p>Customized domestic and international holiday packages designed around your itinerary.</p></div><div class="card"><div class="icon">🧳</div><h3>Customized Trips</h3><p>Flexible travel planning for families, couples, groups and individual travellers.</p></div><div class="card"><div class="icon">💬</div><h3>Travel Assistance</h3><p>Speak with our team for quotations, itinerary guidance and booking support.</p></div></div></div></section>
