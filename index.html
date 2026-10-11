@@ -240,4 +240,231 @@ onAuthStateChanged(auth, (user) => {
   if (user && (user.email || '').toLowerCase() === ADMIN_EMAIL) unlockAdminDesk(user);
   else { if (user) signOut(auth).catch(() => {}); lockAdminDesk(); adminStatus('Sign in with the authorized Accuraa admin email to access quotations.'); }
 });
-</script></body></html>
+</script>
+<!-- Accuraa International AI Travel Partner -->
+<style>
+#accuraa-ai-launcher {
+  position: fixed;
+  right: 20px;
+  bottom: 88px;
+  z-index: 99999;
+  border: 0;
+  border-radius: 30px;
+  padding: 13px 18px;
+  background: #082747;
+  color: #fff;
+  font: 600 14px Arial, sans-serif;
+  box-shadow: 0 4px 18px #0003;
+  cursor: pointer;
+}
+#accuraa-ai-panel {
+  display: none;
+  position: fixed;
+  right: 16px;
+  bottom: 145px;
+  z-index: 100000;
+  width: min(360px, calc(100vw - 32px));
+  height: min(500px, calc(100dvh - 180px));
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 35px #0004;
+  overflow: hidden;
+  font: 14px Arial, sans-serif;
+  flex-direction: column;
+}
+#accuraa-ai-panel.open { display: flex; }
+#accuraa-ai-header {
+  background: #082747;
+  color: white;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#accuraa-ai-header strong { font-size: 16px; }
+#accuraa-ai-close {
+  border: 0;
+  color: white;
+  background: transparent;
+  font-size: 25px;
+  cursor: pointer;
+}
+#accuraa-ai-language {
+  width: calc(100% - 24px);
+  margin: 10px 12px 0;
+  padding: 9px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+}
+#accuraa-ai-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.accuraa-ai-message {
+  padding: 10px 12px;
+  border-radius: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-width: 90%;
+}
+.accuraa-ai-bot {
+  background: #f0f4f8;
+  color: #172b3d;
+  align-self: flex-start;
+}
+.accuraa-ai-user {
+  background: #082747;
+  color: white;
+  align-self: flex-end;
+}
+#accuraa-ai-form {
+  display: flex;
+  gap: 7px;
+  padding: 10px;
+  border-top: 1px solid #eee;
+}
+#accuraa-ai-input {
+  min-width: 0;
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 11px;
+  font: inherit;
+}
+#accuraa-ai-send {
+  border: 0;
+  border-radius: 10px;
+  padding: 0 15px;
+  background: #e9bf50;
+  color: #10233a;
+  font-weight: bold;
+  cursor: pointer;
+}
+#accuraa-ai-send:disabled { opacity: .6; }
+@media(max-width:480px) {
+  #accuraa-ai-launcher { right: 12px; bottom: 82px; }
+  #accuraa-ai-panel { right: 8px; bottom: 140px; width: calc(100vw - 16px); }
+}
+</style>
+
+<button id="accuraa-ai-launcher" type="button">
+  ✈ AI Travel Partner
+</button>
+
+<section id="accuraa-ai-panel" aria-label="AI Travel Partner chat">
+  <div id="accuraa-ai-header">
+    <strong>✈ Your Travel Partner</strong>
+    <button id="accuraa-ai-close" type="button" aria-label="Close chat">×</button>
+  </div>
+
+  <select id="accuraa-ai-language" aria-label="Choose language">
+    <option value="English">English</option>
+    <option value="Hindi">हिन्दी</option>
+    <option value="Gujarati">ગુજરાતી</option>
+  </select>
+
+  <div id="accuraa-ai-messages" aria-live="polite">
+    <div class="accuraa-ai-message accuraa-ai-bot">
+      Hello! Welcome to Accuraa International. Where would you like to travel?
+    </div>
+  </div>
+
+  <form id="accuraa-ai-form">
+    <input id="accuraa-ai-input" maxlength="1500"
+      placeholder="Ask about your trip..." autocomplete="off" required>
+    <button id="accuraa-ai-send" type="submit">Send</button>
+  </form>
+</section>
+
+<script>
+(() => {
+  const API_URL =
+    "https://long-cloud-f1e5accuraa-your-travel-partner.accuraa-international.workers.dev";
+
+  const launcher = document.getElementById("accuraa-ai-launcher");
+  const panel = document.getElementById("accuraa-ai-panel");
+  const close = document.getElementById("accuraa-ai-close");
+  const messages = document.getElementById("accuraa-ai-messages");
+  const form = document.getElementById("accuraa-ai-form");
+  const input = document.getElementById("accuraa-ai-input");
+  const send = document.getElementById("accuraa-ai-send");
+  const language = document.getElementById("accuraa-ai-language");
+  const history = [];
+
+  function addMessage(text, sender) {
+    const bubble = document.createElement("div");
+    bubble.className = "accuraa-ai-message " +
+      (sender === "user" ? "accuraa-ai-user" : "accuraa-ai-bot");
+    bubble.textContent = text;
+    messages.appendChild(bubble);
+    messages.scrollTop = messages.scrollHeight;
+    return bubble;
+  }
+
+  launcher.addEventListener("click", () => {
+    panel.classList.add("open");
+    input.focus();
+  });
+
+  close.addEventListener("click", () => {
+    panel.classList.remove("open");
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const message = input.value.trim();
+    if (!message || send.disabled) return;
+
+    addMessage(message, "user");
+    input.value = "";
+    send.disabled = true;
+
+    const waiting = addMessage("Preparing your travel suggestions…", "bot");
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message,
+          language: language.value,
+          history: history.slice(-8)
+        })
+      });
+
+      const data = await response.json();
+      waiting.remove();
+
+      if (!response.ok || !data.reply) {
+        throw new Error(data.error || "The travel assistant is unavailable.");
+      }
+
+      addMessage(data.reply, "bot");
+      history.push(
+        { role: "user", content: message },
+        { role: "assistant", content: data.reply }
+      );
+      if (history.length > 8) history.splice(0, history.length - 8);
+    } catch (error) {
+      waiting.remove();
+      addMessage(
+        "Sorry, I couldn't connect just now. Please try again shortly.",
+        "bot"
+      );
+      console.error("Accuraa AI chat error:", error);
+    } finally {
+      send.disabled = false;
+      input.focus();
+    }
+  });
+})();
+</script>
+</body>
+</html>
+</body></html>
