@@ -254,10 +254,13 @@ async function downloadLatestAccuraaPDF(answer, button) {
   const date = new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" });
   const sheet = document.createElement("div");
   sheet.className = "accuraa-pdf-sheet";
-  sheet.style.cssText = "position:fixed;left:0;top:0;z-index:2147483000;width:186mm;max-width:186mm;background:#fff;color:#172238;font-family:Arial,Helvetica,sans-serif;font-size:10.5pt;line-height:1.55;box-sizing:border-box;";
+  
+sheet.style.cssText =
+    "position:fixed;left:0;top:0;z-index:-1;" +
+    "width:186mm;min-height:20mm;" +
+    "padding:0;background:#fff;color:#172238;" +
+    "font-family:Arial,sans-serif;font-size:11pt;line-height:1.6;";
 
-  // Use the same origin as the current page (works on www and non-www domains).
-  const logoUrl = "https://www.accuraainternational.online/logo.png";
   sheet.innerHTML =
     "<header class='pdf-brand'><img class='pdf-logo' src='" + esc(logoUrl) + "' alt='Accuraa International logo' onerror='this.style.display=\"none\"'>" +
       "<div class='pdf-brand-text'><div class='pdf-brand-name'>Accuraa International</div><div class='pdf-tagline'>YOUR TRAVEL PARTNER</div><div class='pdf-website'>www.accuraainternational.online</div></div></header>" +
