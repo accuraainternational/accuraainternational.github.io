@@ -630,31 +630,6 @@ pdfButton.addEventListener("click", function () {
 // Place the button directly after the latest AI message
 latestBotMessage.insertAdjacentElement("afterend", pdfButton);
 
-// Add a PDF download button for the latest AI response
-document.querySelectorAll(".accuraa-pdf-action").forEach(function (btn) {
-  btn.remove();
-});
-
-const pdfButton = document.createElement("button");
-pdfButton.type = "button";
-pdfButton.className = "accuraa-pdf-action";
-pdfButton.textContent = "⬇ Download this answer as PDF";
-
-pdfButton.addEventListener("click", function () {
-  downloadLatestAccuraaPDF(data.reply, pdfButton);
-});
-
-// Place the button immediately after the latest bot response
-const chatContainer =
-  document.querySelector("#tp-chat-messages") ||
-  document.querySelector(".tp-chat-messages") ||
-  document.querySelector("#tp-messages");
-
-if (chatContainer) {
-  chatContainer.appendChild(pdfButton);
-} else {
-  console.error("Chat container not found for PDF button.");
-}
 
       history.push(
         { role: "user", content: message },
