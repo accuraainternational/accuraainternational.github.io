@@ -160,6 +160,142 @@ body.admin-unlocked .admin-private:not(.tp-hidden){display:block!important}
 <a class="wa" href="https://wa.me/919664600928?text=Hello%20Accuraa%20International%2C%20I%20would%20like%20a%20travel%20quote." aria-label="WhatsApp Accuraa International">◉</a><footer><div class="container footer-row"><div>© 2026 Accuraa International. All rights reserved.</div><div>Your Travel Partner • Gujarat, India</div></div></footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
+async function downloadLatestAccuraaPDF(answer, button) {
+  if (!answer || !answer.trim()) {
+    alert("There is no AI response to download yet.");
+    return;
+  }
+
+  if (typeof window.html2pdf !== "function") {
+    alert("PDF library not loaded. Please refresh and try again.");
+    return;
+  }
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Preparing PDF...";
+  }
+
+  const esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[c];
+    });
+  };
+
+  const content = String(answer).split(/\r?\n/).map(function (line) {
+    const s = line.trim();
+    if (!s) return "";
+
+    const heading = s.match(/^#{1,3}\s+(.+)$/);
+    const bullet = s.match(/^[-*•]\s+(.+)$/);
+    const numbered = s.match(/^\d+[.)]\s+(.+)$/);
+
+    if (heading) {
+      return "<h2>" + esc(heading[1]) + "</h2>";
+    }
+    if (bullet) {
+      return "<p class='bullet'>• " + esc(bullet[1]) + "</p>";
+    }
+    if (numbered) {
+      return "<p>" + esc(numbered[0]) + "</p>";
+    }
+    return "<p>" + esc(s) + "</p>";
+  }).join("");
+
+  const date = new Date().toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  });
+
+  const sheet = document.createElement("div");
+
+  sheet.style.cssText =
+    "position:fixed;left:-12000px;top:0;width:186mm;" +
+    "padding:0;background:#fff;color:#172238;" +
+    "font-family:Arial,sans-serif;font-size:11pt;line-height:1.6;";
+
+  sheet.innerHTML =
+    "<header style='background:#102b5c;color:white;padding:22px;" +
+    "border-bottom:5px solid #d6a62a;display:flex;align-items:center;gap:16px'>" +
+      "<img src='https://accuraainternational.online/logo.png' " +
+      "style='width:65px;height:65px;object-fit:contain;background:white;" +
+      "border-radius:6px;padding:4px' alt='Accuraa logo'>" +
+      "<div><div style='font-size:22px;font-weight:bold'>" +
+      "Accuraa International</div>" +
+      "<div style='color:#f2c75c;font-size:10px;letter-spacing:2px'>" +
+      "YOUR TRAVEL PARTNER</div>" +
+      "<div style='font-size:10px;margin-top:5px'>" +
+      "accuraainternational.online</div></div>" +
+    "</header>" +
+    "<main style='padding:24px'>" +
+      "<div style='color:#a17a19;font-size:10px;font-weight:bold;" +
+      "letter-spacing:1.5px'>PERSONALISED TRAVEL PLAN</div>" +
+      "<h1 style='color:#102b5c;font-size:22px;margin:8px 0'>" +
+      "Your Travel Itinerary</h1>" +
+      "<p style='color:#64748b;font-size:10px'>Prepared on " +
+      esc(date) + "</p>" +
+      "<div class='pdf-answer' style='margin-top:22px'>" +
+      content + "</div>" +
+    "</main>" +
+    "<footer style='border-top:2px solid #d6a62a;padding:14px 24px;" +
+    "font-size:9px;color:#526078'>" +
+      "<b style='color:#102b5c'>Accuraa International</b> · Your Travel Partner" +
+      "<br>For personalised quotations: travel@accuraainternational.online" +
+      "<br><br>Prices and availability are estimates and should be verified before booking." +
+    "</footer>";
+
+  sheet.querySelectorAll("h2").forEach(function (el) {
+    el.style.cssText =
+      "color:#102b5c;font-size:15px;margin:18px 0 7px;" +
+      "break-after:avoid;page-break-after:avoid";
+  });
+
+  sheet.querySelectorAll("p").forEach(function (el) {
+    el.style.margin = "0 0 10px";
+  });
+
+  document.body.appendChild(sheet);
+
+  try {
+    await window.html2pdf().set({
+      margin: [8, 10, 10, 10],
+      filename: "Accuraa-Travel-Plan-" +
+        new Date().toISOString().slice(0, 10) + ".pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff"
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait"
+      },
+      pagebreak: {
+        mode: ["css", "legacy"],
+        avoid: ["h2"]
+      }
+    }).from(sheet).save();
+  } catch (error) {
+    console.error("PDF generation failed:", error);
+    alert("Unable to generate the PDF. Please try again.");
+  } finally {
+    sheet.remove();
+    if (button) {
+      button.disabled = false;
+      button.textContent = "⬇ Download this answer as PDF";
+    }
+  }
+}
+
 function tpShow(which){var req=which==='req';var admin=which==='admin';document.getElementById('tp-req').classList.toggle('tp-hidden',!req);document.getElementById('tp-admin-login').classList.toggle('tp-hidden',req||which==='quote');document.getElementById('tp-quote').classList.toggle('tp-hidden',which!=='quote');document.getElementById('tp-tab-req').classList.toggle('active',req);document.getElementById('tp-tab-admin').classList.toggle('active',admin||which==='quote');if(which==='quote')tpUpdateTotal()}
 function tpPrint(which){
  var form=document.getElementById(which==='req'?'tp-req-form':'tp-quote-form');
