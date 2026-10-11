@@ -255,11 +255,13 @@ async function downloadLatestAccuraaPDF(answer, button) {
   const sheet = document.createElement("div");
   sheet.className = "accuraa-pdf-sheet";
   
+
 sheet.style.cssText =
-    "position:fixed;left:0;top:0;z-index:-1;" +
-    "width:186mm;min-height:20mm;" +
-    "padding:0;background:#fff;color:#172238;" +
-    "font-family:Arial,sans-serif;font-size:11pt;line-height:1.6;";
+  "position:fixed;left:0;top:0;z-index:2147483000;" +
+  "width:186mm;min-height:20mm;" +
+  "padding:0;background:#fff;color:#172238;" +
+  "font-family:Arial,sans-serif;font-size:11pt;line-height:1.6;";
+
 
   sheet.innerHTML =
     "<header class='pdf-brand'><img class='pdf-logo' src='" + esc(logoUrl) + "' alt='Accuraa International logo' onerror='this.style.display=\"none\"'>" +
