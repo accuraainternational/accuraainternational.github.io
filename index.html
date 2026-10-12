@@ -729,7 +729,7 @@
     </script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js"; import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js"; // Firebase web configuration
-        for the Accuraa-Admin-Desk project. const firebaseConfig = { apiKey: "AIzaSyDaQXd1-YbfWV7myZ3WEmopx9mFuI4Nj_4", authDomain: "accuraa-admin-desk.firebaseapp.com", projectId: "accuraa-admin-desk", storageBucket: "accuraa-admin-desk.firebasestorage.app",
+        for Accuraa-Admin-Desk project. const firebaseConfig = { apiKey: "AIzaSyDaQXd1-YbfWV7myZ3WEmopx9mFuI4Nj_4", authDomain: "accuraa-admin-desk.firebaseapp.com", projectId: "accuraa-admin-desk", storageBucket: "accuraa-admin-desk.firebasestorage.app",
         messagingSenderId: "302461714802", appId: "1:302461714802:web:2f7a8290db9f6a2a5f5deb" }; const ADMIN_EMAIL = "accuraa.international@gmail.com"; const app = initializeApp(firebaseConfig); const auth = getAuth(app); const loginForm = document.getElementById("tp-admin-login-form");
         const emailInput = document.getElementById("tp-admin-email"); const passwordInput = document.getElementById("tp-admin-password"); const statusBox = document.getElementById("tp-admin-status"); const signInButton = document.getElementById("tp-admin-signin");
         const signOutButton = document.getElementById("tp-admin-signout"); const openQuoteButton = document.getElementById("tp-admin-open-quote"); function adminStatus(message, kind = "") { statusBox.textContent = message; statusBox.className = "admin-status"
