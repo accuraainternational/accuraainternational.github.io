@@ -510,12 +510,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         async function downloadLatestAccuraaPDF(answer, button) {
-          if (!answer || !String(answer).trim()) {
-            alert("There is no AI response to download yet.");
+          const answerText = (typeof answer === "string") ? answer : "";
+          if (!answerText.trim()) {
+            alert("There is no AI response text to download. Please ask the chatbot again.");
             return;
           }
-          if (typeof window.html2pdf !== "function") {
-            alert("PDF library not loaded. Please refresh and try again.");
+        
+          // Open the print window immediately inside the button click, before any await.
+          const printWindow = window.open("", "_blank");
+          if (!printWindow) {
+            alert("Your browser blocked the PDF window. Allow pop-ups for accuraainternational.online and try again.");
             return;
           }
         
@@ -529,13 +533,12 @@
             "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
           })[ch]);
         
-          // Preserve common Markdown formatting while escaping all supplied text.
           const inlineFormat = (value) => esc(value)
             .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
             .replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, "$1<em>$2</em>")
             .replace(/`([^`]+)`/g, "<code>$1</code>");
         
-          const lines = String(answer).replace(/\r/g, "").split("\n");
+          const lines = answerText.replace(/\r/g, "").split("\n");
           const blocks = [];
           let paragraph = [];
           let listType = null;
@@ -550,7 +553,9 @@
           };
           const flushList = () => {
             if (listItems.length) {
-              blocks.push("<" + listType + ">" + listItems.map(item => "<li>" + inlineFormat(item) + "</li>").join("") + "</" + listType + ">");
+              blocks.push("<" + listType + ">" +
+                listItems.map(item => "<li>" + inlineFormat(item) + "</li>").join("") +
+                "</" + listType + ">");
               listItems = [];
               listType = null;
             }
@@ -558,11 +563,19 @@
           const flushTable = () => {
             if (!tableRows.length) return;
             const rows = tableRows.filter(row => !/^\s*\|?\s*:?-{3,}/.test(row));
-            const parsed = rows.map(row => row.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map(cell => cell.trim()));
+            const parsed = rows.map(row =>
+              row.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map(cell => cell.trim())
+            );
             if (parsed.length) {
               const header = parsed[0];
               const body = parsed.slice(1);
-              blocks.push("<table><thead><tr>" + header.map(cell => "<th>" + inlineFormat(cell) + "</th>").join("") + "</tr></thead><tbody>" + body.map(row => "<tr>" + header.map((_, i) => "<td>" + inlineFormat(row[i] || "") + "</td>").join("") + "</tr>").join("") + "</tbody></table>");
+              blocks.push("<table><thead><tr>" +
+                header.map(cell => "<th>" + inlineFormat(cell) + "</th>").join("") +
+                "</tr></thead><tbody>" +
+                body.map(row => "<tr>" +
+                  header.map((_, i) => "<td>" + inlineFormat(row[i] || "") + "</td>").join("") +
+                  "</tr>").join("") +
+                "</tbody></table>");
             }
             tableRows = [];
           };
@@ -574,9 +587,12 @@
               return;
             }
             if (line.startsWith("|") && line.includes("|", 1)) {
-              flushParagraph(); flushList(); tableRows.push(line); return;
+              flushParagraph(); flushList();
+              tableRows.push(line);
+              return;
             }
             flushTable();
+        
             const heading = line.match(/^(#{1,3})\s+(.+)$/);
             if (heading) {
               flushParagraph(); flushList();
@@ -584,6 +600,7 @@
               blocks.push("<h" + level + ">" + inlineFormat(heading[2]) + "</h" + level + ">");
               return;
             }
+        
             const bullet = line.match(/^\s*[-*•]\s+(.+)$/);
             const numbered = line.match(/^\s*\d+[.)]\s+(.+)$/);
             if (bullet || numbered) {
@@ -594,82 +611,96 @@
               listItems.push((bullet || numbered)[1]);
               return;
             }
+        
             flushList();
-            if (/^---+$/.test(line)) { flushParagraph(); blocks.push("<hr>"); return; }
+            if (/^---+$/.test(line)) {
+              flushParagraph();
+              blocks.push("<hr>");
+              return;
+            }
             paragraph.push(line);
           });
           flushParagraph(); flushList(); flushTable();
         
-          const date = new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" });
-          const sheet = document.createElement("div");
-          sheet.className = "accuraa-pdf-sheet";
-          
-        
-        sheet.style.cssText =
-          "position:fixed;left:0;top:0;z-index:2147483000;" +
-          "width:186mm;min-height:20mm;" +
-          "padding:0;background:#fff;color:#172238;" +
-          "font-family:Arial,sans-serif;font-size:11pt;line-height:1.6;";
-        
-        
-          // Use the same origin as the live website to avoid www/non-www logo URL mismatches.
+          const date = new Date().toLocaleDateString("en-IN", {
+            day: "2-digit", month: "long", year: "numeric"
+          });
+          // Relative URL uses the same host as the current page (www or non-www).
           const logoUrl = new URL("logo.png", window.location.href).href;
-          sheet.innerHTML =
-            "<header class='pdf-brand'><img class='pdf-logo' src='" + esc(logoUrl) + "' alt='Accuraa International logo' onerror='this.style.display=\"none\"'>" +
-              "<div class='pdf-brand-text'><div class='pdf-brand-name'>Accuraa International</div><div class='pdf-tagline'>YOUR TRAVEL PARTNER</div><div class='pdf-website'>www.accuraainternational.online</div></div></header>" +
-            "<main class='pdf-main'><div class='pdf-eyebrow'>PERSONALISED TRAVEL PLAN</div><h1>Your Travel Itinerary</h1><p class='pdf-date'>Prepared on " + esc(date) + "</p><div class='pdf-answer'>" + blocks.join("") + "</div></main>" +
-            "<footer class='pdf-footer'><strong>Accuraa International</strong> · Your Travel Partner<br>For personalised quotations: travel@accuraainternational.online<br><span>Prices and availability are estimates and should be verified before booking.</span></footer>";
         
-          const style = document.createElement("style");
-          style.textContent = `
-            .accuraa-pdf-sheet *{box-sizing:border-box}
-            .accuraa-pdf-sheet .pdf-brand{display:flex;align-items:center;gap:15px;padding:18px 20px;background:#102b5c;color:#fff;border-bottom:5px solid #d6a62a;min-height:105px}
-            .accuraa-pdf-sheet .pdf-logo{width:70px;height:70px;object-fit:contain;background:#fff;border-radius:5px;padding:4px;flex:0 0 70px}
-            .accuraa-pdf-sheet .pdf-brand-name{font-size:22pt;font-weight:700;line-height:1.15;color:#fff}
-            .accuraa-pdf-sheet .pdf-tagline{font-size:8pt;letter-spacing:2px;font-weight:700;color:#f2c75c;margin-top:4px}
-            .accuraa-pdf-sheet .pdf-website{font-size:8pt;margin-top:5px;color:#fff}
-            .accuraa-pdf-sheet .pdf-main{padding:20px 22px 24px}
-            .accuraa-pdf-sheet .pdf-eyebrow{font-size:8pt;font-weight:700;letter-spacing:1.5px;color:#a17a19;margin-bottom:5px}
-            .accuraa-pdf-sheet h1{font-size:21pt;line-height:1.2;letter-spacing:0;color:#102b5c;margin:0 0 7px}
-            .accuraa-pdf-sheet .pdf-date{font-size:8.5pt;color:#64748b;margin:0 0 18px}
-            .accuraa-pdf-sheet .pdf-answer{overflow-wrap:anywhere;word-break:normal;color:#263449}
-            .accuraa-pdf-sheet .pdf-answer p{margin:0 0 9px;orphans:3;widows:3}
-            .accuraa-pdf-sheet .pdf-answer h1,.accuraa-pdf-sheet .pdf-answer h2,.accuraa-pdf-sheet .pdf-answer h3{color:#102b5c;line-height:1.25;letter-spacing:0;margin:15px 0 7px;break-after:avoid;page-break-after:avoid}
-            .accuraa-pdf-sheet .pdf-answer h1{font-size:16pt}.accuraa-pdf-sheet .pdf-answer h2{font-size:14pt}.accuraa-pdf-sheet .pdf-answer h3{font-size:11.5pt}
-            .accuraa-pdf-sheet .pdf-answer ul,.accuraa-pdf-sheet .pdf-answer ol{padding-left:22px;margin:2px 0 12px}
-            .accuraa-pdf-sheet .pdf-answer li{padding-left:3px;margin:0 0 5px;break-inside:avoid;page-break-inside:avoid}
-            .accuraa-pdf-sheet .pdf-answer table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:9pt;table-layout:fixed}
-            .accuraa-pdf-sheet .pdf-answer th{background:#102b5c;color:#fff;text-align:left;font-weight:700}
-            .accuraa-pdf-sheet .pdf-answer th,.accuraa-pdf-sheet .pdf-answer td{border:1px solid #d5deea;padding:6px;overflow-wrap:anywhere;vertical-align:top}
-            .accuraa-pdf-sheet .pdf-answer tr{break-inside:avoid;page-break-inside:avoid}
-            .accuraa-pdf-sheet .pdf-answer code{font-family:monospace;background:#f1f5f9;padding:1px 3px;border-radius:3px}
-            .accuraa-pdf-sheet .pdf-answer hr{border:0;border-top:1px solid #d5deea;margin:12px 0}
-            .accuraa-pdf-sheet .pdf-footer{border-top:2px solid #d6a62a;padding:12px 22px 15px;font-size:8pt;color:#526078;line-height:1.5}
-            .accuraa-pdf-sheet .pdf-footer strong{color:#102b5c}.accuraa-pdf-sheet .pdf-footer span{display:block;margin-top:5px}
-          `;
-          sheet.appendChild(style);
-          document.body.appendChild(sheet);
+          const printHtml = `<!doctype html>
+        <html lang="en">
+        <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Accuraa International - Travel Plan</title>
+        <style>
+          @page { size: A4 portrait; margin: 12mm; }
+          * { box-sizing: border-box; }
+          body { margin: 0; color: #263449; font: 11pt/1.55 Arial, Helvetica, sans-serif; }
+          header { display:flex; align-items:center; gap:15px; padding:16px 18px;
+            background:#102b5c; color:#fff; border-bottom:5px solid #d6a62a; }
+          header img { width:72px; height:72px; object-fit:contain; background:#fff;
+            border-radius:5px; padding:4px; flex:0 0 72px; }
+          .brand { font-size:21pt; font-weight:700; line-height:1.15; }
+          .tagline { color:#f2c75c; font-size:8pt; letter-spacing:2px; font-weight:700; margin-top:4px; }
+          .website { font-size:8pt; margin-top:5px; }
+          main { padding:18px 2px 22px; }
+          .eyebrow { color:#a17a19; font-size:8pt; font-weight:700; letter-spacing:1.4px; }
+          h1 { color:#102b5c; font-size:21pt; line-height:1.2; margin:5px 0 7px; }
+          .date { color:#64748b; font-size:8.5pt; margin:0 0 18px; }
+          .answer { overflow-wrap:anywhere; }
+          .answer p { margin:0 0 9px; orphans:3; widows:3; }
+          .answer h1,.answer h2,.answer h3 { color:#102b5c; line-height:1.25; margin:15px 0 7px; break-after:avoid; }
+          .answer h1 { font-size:16pt; } .answer h2 { font-size:14pt; } .answer h3 { font-size:11.5pt; }
+          .answer ul,.answer ol { padding-left:22px; margin:3px 0 12px; }
+          .answer li { margin-bottom:5px; }
+          .answer table { width:100%; border-collapse:collapse; margin:10px 0 14px; font-size:9pt; table-layout:fixed; }
+          .answer th { background:#102b5c; color:#fff; text-align:left; }
+          .answer th,.answer td { border:1px solid #d5deea; padding:6px; overflow-wrap:anywhere; vertical-align:top; }
+          .answer code { font-family:monospace; background:#f1f5f9; padding:1px 3px; }
+          .answer hr { border:0; border-top:1px solid #d5deea; margin:12px 0; }
+          footer { border-top:2px solid #d6a62a; padding:10px 2px; font-size:8pt; color:#526078; line-height:1.5; }
+          footer strong { color:#102b5c; }
+          @media screen { body { max-width: 190mm; margin: 15px auto; padding: 0 12px; } }
+        </style>
+        </head>
+        <body>
+        <header>
+          <img src="${esc(logoUrl)}" alt="Accuraa International logo">
+          <div><div class="brand">Accuraa International</div>
+          <div class="tagline">YOUR TRAVEL PARTNER</div>
+          <div class="website">www.accuraainternational.online</div></div>
+        </header>
+        <main>
+          <div class="eyebrow">PERSONALISED TRAVEL PLAN</div>
+          <h1>Your Travel Itinerary</h1>
+          <p class="date">Prepared on ${esc(date)}</p>
+          <div class="answer">${blocks.join("")}</div>
+        </main>
+        <footer><strong>Accuraa International</strong> · Your Travel Partner<br>
+        For personalised quotations: travel@accuraainternational.online<br>
+        Prices and availability are estimates and should be verified before booking.</footer>
+        <script>
+          window.addEventListener("load", function () {
+            setTimeout(function () { window.focus(); window.print(); }, 350);
+          });
+          window.addEventListener("afterprint", function () {
+            setTimeout(function () { window.close(); }, 300);
+          });
+        <\/script>
+        </body>
+        </html>`;
         
           try {
-            // Let the browser load the logo before html2canvas snapshots the page.
-            const logo = sheet.querySelector(".pdf-logo");
-            if (logo && !logo.complete) await new Promise(resolve => {
-              logo.onload = resolve; logo.onerror = resolve;
-              setTimeout(resolve, 1800);
-            });
-            await window.html2pdf().set({
-              margin: [8, 12, 10, 12],
-              filename: "Accuraa-Travel-Plan-" + new Date().toISOString().slice(0, 10) + ".pdf",
-              image: { type: "jpeg", quality: 0.98 },
-              html2canvas: { scale: 2, useCORS: true, allowTaint: false, backgroundColor: "#ffffff", logging: false, scrollX: 0, scrollY: 0 },
-              jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-              pagebreak: { mode: ["css", "legacy"], avoid: ["h1", "h2", "h3", "li", "tr"] }
-            }).from(sheet).save();
+            printWindow.document.open();
+            printWindow.document.write(printHtml);
+            printWindow.document.close();
           } catch (error) {
-            console.error("PDF generation failed:", error);
-            alert("Unable to generate the PDF. Please try again.");
+            console.error("Accuraa PDF print view failed:", error);
+            printWindow.close();
+            alert("Unable to prepare the PDF preview. Please try again.");
           } finally {
-            sheet.remove();
             if (button) {
               button.disabled = false;
               button.textContent = originalLabel || "⬇ Download this answer as PDF";
@@ -962,9 +993,6 @@
           });
         })();
     </script>
-</body>
-
-</html>
 </body>
 
 </html>
